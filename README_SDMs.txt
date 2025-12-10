@@ -45,19 +45,19 @@ Bio.D <- read.csv("C:/Users/ez14/OneDrive - The University of Waikato/EDO/Chapte
 # raster::plot(raster_BATHY)
 # writeRaster(raster_BATHY, 'Present_Bathy.tif', overwrite=TRUE)
 
-# Load env data (2) - (leading all rasters in one go) - NB: not other files in the folder, only the rasters!
+# Load env data (2) - (loading all rasters in one go) - NB: not other files in the folder, only the rasters!
 
 # Present
 setwd("C:/Users/ez14/OneDrive - The University of Waikato/EDO/Chapter 1/Training_Fabrice/Present_Env_predictors_EEZ")
 f1km_Present <- list.files(getwd())
 ras1km_Present <- lapply(f1km_Present,raster) # load as raster
-PredStack1km_Present <- stack(ras1km_Present) # creating a preidictor stack (a raster stack of env. variables used)
+PredStack1km_Present <- stack(ras1km_Present) # creating a predictor stack (a raster stack of env. variables used)
 # convert list of rasters to stack: turn rasters (stack) into a dataframe (needed for spatial prediction)
 Pred_1km_Present <-  na.omit(as.data.frame(PredStack1km_Present, xy = T))
 colnames(Pred_1km_Present) <- c("X","Y","Aragonite","Bathy","Bot_sal","Bpi_broad","Bpi_fine",
                                 "Calcite","Detr_flux","Nitro","OXY_C","Prof","Slope")
 
-# # plot environemntal variables (rasters) to check 
+# # plot environmental variables (rasters) to check 
 plot(ras1km_Present[[2]])
 # plot(ras1km_Present[[11]])
 
@@ -80,7 +80,7 @@ Pred_1km_SSP3<- na.omit(as.data.frame(PredStack1km_SSP3, xy = T))
 colnames(Pred_1km_SSP3) <- c("X","Y","Aragonite","Bathy","Bot_sal","Bpi_broad","Bpi_fine",
                              "Calcite","Detr_flux","Nitro","OXY_C","Prof","Slope")
 
-# to project Lat Long to X AND y 
+# to project Lat Long to X and Y 
 MPI.proj <- crs(PredStack1km_Present[[3]])
 myproj <- CRS("+proj=merc +lat_ts=-41 +lon_0=100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs")
 
@@ -1201,4 +1201,5 @@ plot(t_SSP3)
 setwd("C:/Users/ez14/OneDrive - The University of Waikato/EDO/Chapter 1/Training_Fabrice/R_files/2_Env_Coverage")
 writeRaster(t_PRESENT,filename = "Env_cov_PRESENT.tif", overwrite=T) # write raster file
 writeRaster(t_SSP2,filename = "Env_cov_SSP2.tif", overwrite=T) # write raster file
+
 writeRaster(t_SSP3,filename = "Env_cov_SSP3.tif", overwrite=T) # write raster file
